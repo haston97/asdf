@@ -335,10 +335,10 @@ public class AceraTile : Tile {
 
 #if UNITY_EDITOR
     // The following is a helper that adds a menu item to create a RoadTile Asset
-    [MenuItem("Assets/Create/AutoTile")]
+    [MenuItem("Assets/Create/CenterTile")]
     public static void CreateRoadTile()
     {
-        string path = EditorUtility.SaveFilePanelInProject("Save Auto Tile", "New Auto Tile", "Asset", "Save Auto Tile", "Assets");
+        string path = EditorUtility.SaveFilePanelInProject("Save Center Tile", "New Center Tile", "Asset", "Save Center Tile", "Assets");
         if (path == "")
             return;
         AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<AceraTile>(), path);
