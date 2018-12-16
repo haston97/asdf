@@ -8,7 +8,7 @@ using UnityEditor;
 
 public class AceraTile : Tile {
     static public Texture2D texture;
-    Sprite[] tSprites = Resources.LoadAll<Sprite>(texture.name);
+    public Sprite[] tSprites;
     public override void RefreshTile(Vector3Int location, ITilemap tilemap)
     {
         for(int yd = -1; yd<=1; yd++)
