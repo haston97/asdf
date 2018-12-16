@@ -22,7 +22,6 @@ public class WorldTerrain : MonoBehaviour {
     GameObject x;
     CameraMov2 pers;
     public Rect windowRect;
-
     private Vector2 scrollViewVector = Vector2.zero;
     private string[] edificios = { "Random", "Unifamiliar", "Edificio apartamentos" };//add the rest
     int n, i, edificio;
