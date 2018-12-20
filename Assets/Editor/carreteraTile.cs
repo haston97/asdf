@@ -331,9 +331,10 @@ public class carreteraTile : Tile
                 tileData.sprite = tSprites[0];
                 break;
         }
-        CTTIAD(tilemap, location, new Vector3Int(0, 1, 0));
-        CTTIAD(tilemap, location, new Vector3Int(0, -1, 0));
-        if(tilesAbajo == tilesArriba)
+        tilesArriba = CTTIAD(tilemap, location, new Vector3Int(0, 1, 0));
+        tilesAbajo = CTTIAD(tilemap, location, new Vector3Int(0, -1, 0));
+        Debug.Log("TilesAbajo: "+tilesAbajo.ToString("F2")+"TilesArriba:"+tilesArriba.ToString("F2"));
+        if (tilesAbajo == tilesArriba)
         {
             tileData.sprite = tSprites[47];
         }
@@ -349,20 +350,78 @@ public class carreteraTile : Tile
     private bool hasThisType(ITilemap tilemap, Vector3Int position)
     {
         return tilemap.GetTile(position) == this;
-    }
+    }/*
     private void CTTIAD(ITilemap tilemap, Vector3Int position, Vector3Int increment)
     {
-
+        tilesArriba = 0;
+        tilesAbajo = 0;
+        Vector3Int oldpos = position;
         Vector3Int newpos = position + increment;
-        if (tilemap.GetTile(newpos) == this && increment.y == 1) {
+        while (tilemap.GetTile(newpos) == this && increment.y == 1)
+        {
             tilesArriba++;
-            CTTIAD(tilemap, newpos, increment);
+            position = newpos;
+            newpos = position + increment;
+            if (tilemap.GetTile(newpos) != this && increment.y == 1)
+            {
+                position = oldpos;
+                increment = new Vector3Int(0, -1, 0);
+                newpos = position + increment;
+                while (tilemap.GetTile(newpos) == this && increment.y == -1)
+                {
+                    tilesAbajo++;
+                    position = newpos;
+                    newpos = position + increment;
+                }
+            }
         }
-        if (tilemap.GetTile(newpos) == this && increment.y == -1) {
-            tilesAbajo++;
-            CTTIAD(tilemap, newpos, increment);
-        }
+        Debug.Log(tilesArriba);
+
+
         return;
+    }*/
+    /*
+    private void CTTIAD(ITilemap tilemap, Vector3Int position)
+    {
+        Vector3Int increment = new Vector3Int(0, 1, 0);
+        Vector3Int oldpos = position;
+        Vector3Int newpos = position + increment;
+        bool salir = false;
+        while (tilemap.GetTile(newpos) == this)
+        {
+            tilesArriba++;
+            position = newpos;
+            newpos = position + increment;
+            if (tilemap.GetTile(newpos) != this)
+            {
+                position = oldpos;
+                increment = new Vector3Int(0, -1, 0);
+                newpos = position + increment;
+                while (tilemap.GetTile(newpos) == this)
+                {
+                    tilesAbajo++;
+                    position = newpos;
+                    newpos = position + increment;
+                }
+            }
+
+        }
+
+
+        return;
+    }*/
+    private int CTTIAD(ITilemap tilemap, Vector3Int position, Vector3Int increment)
+    {
+        int tiles = 0;
+        Vector3Int newpos = position + increment;
+        if (tilemap.GetTile(newpos)==this) {
+            tiles += CTTIAD(tilemap, newpos, increment);
+        }
+        else
+        {
+            tiles = 0;
+        }
+        return tiles;
     }
 
 #if UNITY_EDITOR
